@@ -6,13 +6,18 @@ import { Secret } from 'jsonwebtoken';
 import config from '../../config';
 
 type CustomRequest = {
-  kauth?: any;
-} & Request
+  kauth?: {
+    grant?: {
+      access_token?: {
+        token: string;
+      };
+    };
+  };
+} & Request;
 
 const auth =
   (...requiredRoles: string[]) =>
     async (req: CustomRequest, res: Response, next: NextFunction) => {
-      // receiving all the values through rest operator
       try {
         // Check if user is authenticated by Keycloak
         if (!req.kauth || !req.kauth.grant || !req.kauth.grant.access_token) {
@@ -32,11 +37,12 @@ const auth =
 
         req.user = verifiedUser;
 
-        if (requiredRoles.length && !requiredRoles.includes(verifiedUser.role))
+        if (requiredRoles.length && !requiredRoles.includes(verifiedUser.role)) {
           throw new ApiError(
             httpStatus.FORBIDDEN,
             'Forbidden. You are not authorized to perform this action.'
           );
+        }
 
         next();
       } catch (error) {

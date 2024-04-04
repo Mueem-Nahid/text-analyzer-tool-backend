@@ -5,8 +5,22 @@ import { Strategy as OAuth2Strategy, StrategyOptionsWithRequest } from 'passport
 import config from '../config';
 import { Request } from 'express';
 
+const memoryStore = new session.MemoryStore();
+
 const keycloak = new KeycloakConnect({
-  store: new session.MemoryStore(),
+  store: memoryStore,
+}, {
+  realm: config.keycloak.realm!,
+  "auth-server-url": `${config.keycloak.baseUrl}/realms/${config.keycloak.realm}`,
+  "ssl-required": "external",
+  resource: config.keycloak.clientId!,
+  credentials: {
+    secret: config.keycloak.clientSecret,
+  },
+} as any);
+
+passport.serializeUser((user, done) => {
+  done(null, user);
 });
 
 passport.serializeUser((user: any, done) => {

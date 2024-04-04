@@ -9,6 +9,8 @@ import session from 'express-session';
 
 const app: Application = express();
 
+const memoryStore = new session.MemoryStore();
+
 app.use(cors());
 
 // parse data
@@ -18,20 +20,24 @@ app.use(express.urlencoded({ extended: true }));
 // cookie parser
 app.use(cookieParser());
 
-// Keycloak middleware
-app.use(keycloak.middleware());
-
-// Passport middleware
+// // Passport middleware
 app.use(session({
   secret: 'mySecret',
   resave: false,
   saveUninitialized: true,
+  store: memoryStore,
 }));
+
+// Keycloak middleware
+app.use(keycloak.middleware());
+
+// Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 // application routes
-app.use('/api/v1', keycloak.protect(), routes);
+app.use('/api/v1', routes);
 
 // global error handler
 app.use(globalErrorHandler);
