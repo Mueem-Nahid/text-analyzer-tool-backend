@@ -108,7 +108,7 @@ const countLongestWords = catchAsync(
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: 'Number of characters fetched successfully !',
+      message: 'Longest characters fetched successfully !',
       data: result
     });
   }
