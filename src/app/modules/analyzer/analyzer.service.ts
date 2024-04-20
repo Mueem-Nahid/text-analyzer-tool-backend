@@ -1,8 +1,17 @@
 import { IAnalyzer } from './analyzer.interface';
 import { TextAnalyzer } from './analyzer.model';
-import { countCharacters, countParagraphs, countSentences, countWords, findLongestWords } from './analyzer.utils';
+import {
+  analyzeTextInChunks,
+  countCharacters,
+  countParagraphs,
+  countSentences,
+  countWords,
+  findLongestWords
+} from './analyzer.utils';
 import ApiError from '../../../errors/ApiError';
 import httpStatus from 'http-status';
+
+const CHUNK_SIZE  = 1000;
 
 const insertText = async (payload: IAnalyzer) => {
   return await TextAnalyzer.create(payload);
@@ -17,12 +26,20 @@ const getSingleText = async (id: string) => {
 };
 
 const countWordsFromDB = async (id: string) => {
+  const startTime = performance.now(); // Start time
   const text = await getSingleText(id);
   if (text) {
-    const count = countWords(text.text);
+    let count;
+    if (text.text.length > CHUNK_SIZE) {
+      count = await analyzeTextInChunks(text.text, CHUNK_SIZE, countWords);
+    } else {
+      count = countWords(text.text);
+    }
+    const elapsedTime = performance.now() - startTime; // Calculate elapsed time
     return {
       text,
-      count
+      count,
+      analysisTime: elapsedTime.toFixed(2)
     };
   } else {
     throw new ApiError(httpStatus.BAD_REQUEST, 'No text found');
