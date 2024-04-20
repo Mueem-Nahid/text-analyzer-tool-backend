@@ -38,6 +38,7 @@ passport.use(new OAuth2Strategy({
   clientSecret: config.keycloak.clientSecret!,
   callbackURL: `${config.baseUrl}/auth/callback`,
 } as StrategyOptionsWithRequest, (req: Request, accessToken: string, refreshToken: string, profile: any, done: any) => {
+  console.log(req, "req,", accessToken, profile);
   return done(null, profile);
 }));
 
