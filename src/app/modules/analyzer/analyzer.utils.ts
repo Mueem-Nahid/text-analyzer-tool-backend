@@ -38,7 +38,15 @@ export const findLongestWords = (text: string): string[] => {
   return longestWords;
 };
 
-export const analyzeTextInChunks = (text: string, chunkSize: number, functionName: Function): Promise<{ wordCount: number, characterCount: number }> => {
+export const elapsedTime = (startTime: number) => {
+  const elapsedTime = performance.now() - startTime;
+  return elapsedTime.toFixed(2);
+};
+
+export const analyzeTextInChunks = (text: string, chunkSize: number, functionName: string): Promise<{
+  wordCount: number,
+  characterCount: number
+}> => {
   const workerPath = path.resolve(__dirname, 'analyzer.worker.ts');
   return new Promise((resolve, reject) => {
     const worker = new Worker(workerPath, { workerData: { text, chunkSize, functionName } });

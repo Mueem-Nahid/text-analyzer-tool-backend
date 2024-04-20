@@ -5,13 +5,13 @@ import {
   countCharacters,
   countParagraphs,
   countSentences,
-  countWords,
+  countWords, elapsedTime,
   findLongestWords
 } from './analyzer.utils';
 import ApiError from '../../../errors/ApiError';
 import httpStatus from 'http-status';
 
-const CHUNK_SIZE  = 1000;
+const CHUNK_SIZE  = 10000;
 
 const insertText = async (payload: IAnalyzer) => {
   return await TextAnalyzer.create(payload);
@@ -26,20 +26,21 @@ const getSingleText = async (id: string) => {
 };
 
 const countWordsFromDB = async (id: string) => {
-  const startTime = performance.now(); // Start time
+  const startTime = performance.now();
   const text = await getSingleText(id);
   if (text) {
     let count;
+    console.log(text.text.length, "text.text.length");
     if (text.text.length > CHUNK_SIZE) {
-      count = await analyzeTextInChunks(text.text, CHUNK_SIZE, countWords);
+      count = await analyzeTextInChunks(text.text, CHUNK_SIZE, "countWords");
     } else {
       count = countWords(text.text);
     }
-    const elapsedTime = performance.now() - startTime; // Calculate elapsed time
+
     return {
       text,
       count,
-      analysisTime: elapsedTime.toFixed(2)
+      analysisTime: elapsedTime(startTime)
     };
   } else {
     throw new ApiError(httpStatus.BAD_REQUEST, 'No text found');
@@ -47,12 +48,21 @@ const countWordsFromDB = async (id: string) => {
 };
 
 const countCharactersFromDB = async (id: string) => {
+  const startTime = performance.now();
   const text = await getSingleText(id);
   if (text) {
-    const count = countCharacters(text.text);
+    let count;
+    console.log(text.text.length, "text.text.length");
+    if (text.text.length > CHUNK_SIZE) {
+      count = await analyzeTextInChunks(text.text, CHUNK_SIZE, "countCharacters");
+    } else {
+      count = countCharacters(text.text);
+    }
+
     return {
       text,
-      count
+      count,
+      analysisTime: elapsedTime(startTime)
     };
   } else {
     throw new ApiError(httpStatus.BAD_REQUEST, 'No text found');
@@ -60,12 +70,21 @@ const countCharactersFromDB = async (id: string) => {
 };
 
 const countSentencesFromDB = async (id: string) => {
+  const startTime = performance.now();
   const text = await getSingleText(id);
   if (text) {
-    const count = countSentences(text.text);
+    let count;
+    console.log(text.text.length, "text.text.length");
+    if (text.text.length > CHUNK_SIZE) {
+      count = await analyzeTextInChunks(text.text, CHUNK_SIZE, "countSentences");
+    } else {
+      count = countSentences(text.text);
+    }
+
     return {
       text,
-      count
+      count,
+      analysisTime: elapsedTime(startTime)
     };
   } else {
     throw new ApiError(httpStatus.BAD_REQUEST, 'No text found');
@@ -73,12 +92,21 @@ const countSentencesFromDB = async (id: string) => {
 };
 
 const countParagraphsFromDB = async (id: string) => {
+  const startTime = performance.now();
   const text = await getSingleText(id);
   if (text) {
-    const count = countParagraphs(text.text);
+    let count;
+    console.log(text.text.length, "text.text.length");
+    if (text.text.length > CHUNK_SIZE) {
+      count = await analyzeTextInChunks(text.text, CHUNK_SIZE, "countParagraphs");
+    } else {
+      count = countParagraphs(text.text);
+    }
+
     return {
       text,
-      count
+      count,
+      analysisTime: elapsedTime(startTime)
     };
   } else {
     throw new ApiError(httpStatus.BAD_REQUEST, 'No text found');
@@ -86,12 +114,21 @@ const countParagraphsFromDB = async (id: string) => {
 };
 
 const countLongestWordsFromDB = async (id: string) => {
+  const startTime = performance.now();
   const text = await getSingleText(id);
   if (text) {
-    const count = findLongestWords(text.text);
+    let longestWords;
+    console.log(text.text.length, "text.text.length");
+    if (text.text.length > CHUNK_SIZE) {
+      longestWords = await analyzeTextInChunks(text.text, CHUNK_SIZE, "findLongestWords");
+    } else {
+      longestWords = findLongestWords(text.text);
+    }
+
     return {
       text,
-      count
+      longestWords,
+      analysisTime: elapsedTime(startTime)
     };
   } else {
     throw new ApiError(httpStatus.BAD_REQUEST, 'No text found');
