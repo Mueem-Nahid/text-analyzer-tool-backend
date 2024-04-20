@@ -19,6 +19,27 @@ router.get(
 router.get(
   '/words',
   AnalyzerController.countWords
+);
+
+router.get(
+  '/characters',
+  AnalyzerController.countCharacters
+);
+
+router.get(
+  '/sentences',
+  AnalyzerController.countSentences
+);
+
+router.get(
+  '/paragraphs',
+  AnalyzerController.countParagraphs
+);
+
+router.get(
+  '/longest-words',
+  AnalyzerController.countLongestWords
 )
+
 
 export const AnalyzerRoutes = router;

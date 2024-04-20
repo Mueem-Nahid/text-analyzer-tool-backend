@@ -43,8 +43,64 @@ const countWords = catchAsync(
   }
 );
 
+const countCharacters = catchAsync(
+  async (req: Request, res: Response): Promise<void> => {
+    const result = await AnalyzerService.countCharactersFromDB();
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Number of characters fetched successfully !',
+      data: result
+    });
+  }
+);
+
+const countSentences = catchAsync(
+  async (req: Request, res: Response): Promise<void> => {
+    const result = await AnalyzerService.countSentencesFromDB();
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Number of sentences fetched successfully !',
+      data: result
+    });
+  }
+);
+
+const countParagraphs = catchAsync(
+  async (req: Request, res: Response): Promise<void> => {
+    const result = await AnalyzerService.countParagraphsFromDB();
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Number of paragraphs fetched successfully !',
+      data: result
+    });
+  }
+);
+
+const countLongestWords = catchAsync(
+  async (req: Request, res: Response): Promise<void> => {
+    const result = await AnalyzerService.countLongestWordsFromDB();
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Number of characters fetched successfully !',
+      data: result
+    });
+  }
+);
+
 export const AnalyzerController = {
   addText,
   getAllText,
   countWords,
+  countCharacters,
+  countSentences,
+  countParagraphs,
+  countLongestWords
 };

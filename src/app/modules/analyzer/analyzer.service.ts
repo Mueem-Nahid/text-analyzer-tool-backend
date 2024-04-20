@@ -1,6 +1,6 @@
 import { IAnalyzer } from './analyzer.interface';
 import { TextAnalyzer } from './analyzer.model';
-import { countWords } from './analyzer.utils';
+import { countCharacters, countParagraphs, countSentences, countWords, findLongestWords } from './analyzer.utils';
 import ApiError from '../../../errors/ApiError';
 import httpStatus from 'http-status';
 
@@ -25,8 +25,64 @@ const countWordsFromDB = async () => {
   }
 };
 
+const countCharactersFromDB = async () => {
+  const text = await getAllText();
+  if(text) {
+    const count = countCharacters(text.text);
+    return {
+      text,
+      count
+    }
+  } else {
+    throw new ApiError(httpStatus.BAD_REQUEST, "No text found");
+  }
+};
+
+const countSentencesFromDB = async () => {
+  const text = await getAllText();
+  if(text) {
+    const count = countSentences(text.text);
+    return {
+      text,
+      count
+    }
+  } else {
+    throw new ApiError(httpStatus.BAD_REQUEST, "No text found");
+  }
+};
+
+const countParagraphsFromDB = async () => {
+  const text = await getAllText();
+  if(text) {
+    const count = countParagraphs(text.text);
+    return {
+      text,
+      count
+    }
+  } else {
+    throw new ApiError(httpStatus.BAD_REQUEST, "No text found");
+  }
+};
+
+const countLongestWordsFromDB = async () => {
+  const text = await getAllText();
+  if(text) {
+    const count = findLongestWords(text.text);
+    return {
+      text,
+      count
+    }
+  } else {
+    throw new ApiError(httpStatus.BAD_REQUEST, "No text found");
+  }
+};
+
 export const AnalyzerService = {
   insertText,
   getAllText,
-  countWordsFromDB
+  countWordsFromDB,
+  countCharactersFromDB,
+  countSentencesFromDB,
+  countParagraphsFromDB,
+  countLongestWordsFromDB
 };
