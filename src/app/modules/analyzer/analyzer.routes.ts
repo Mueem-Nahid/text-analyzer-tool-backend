@@ -17,27 +17,32 @@ router.get(
 );
 
 router.get(
-  '/words',
+  '/:id',
+  AnalyzerController.getSingleText
+);
+
+router.get(
+  '/:id/words',
   AnalyzerController.countWords
 );
 
 router.get(
-  '/characters',
+  '/:id/characters',
   AnalyzerController.countCharacters
 );
 
 router.get(
-  '/sentences',
+  '/:id/sentences',
   AnalyzerController.countSentences
 );
 
 router.get(
-  '/paragraphs',
+  '/:id/paragraphs',
   AnalyzerController.countParagraphs
 );
 
 router.get(
-  '/longest-words',
+  '/:id/longest-words',
   AnalyzerController.countLongestWords
 )
 

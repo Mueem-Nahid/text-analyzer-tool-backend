@@ -30,9 +30,24 @@ const getAllText = catchAsync(
   }
 );
 
+const getSingleText = catchAsync(
+  async (req: Request, res: Response): Promise<void> => {
+    const { id } = req.params;
+    const result = await AnalyzerService.getSingleText(id);
+
+    sendResponse(res, {
+      statusCode: httpStatus.CREATED,
+      success: true,
+      message: 'Text fetched successfully !',
+      data: result
+    });
+  }
+);
+
 const countWords = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
-    const result = await AnalyzerService.countWordsFromDB();
+    const { id } = req.params;
+    const result = await AnalyzerService.countWordsFromDB(id);
 
     sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -45,7 +60,8 @@ const countWords = catchAsync(
 
 const countCharacters = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
-    const result = await AnalyzerService.countCharactersFromDB();
+    const { id } = req.params;
+    const result = await AnalyzerService.countCharactersFromDB(id);
 
     sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -58,7 +74,8 @@ const countCharacters = catchAsync(
 
 const countSentences = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
-    const result = await AnalyzerService.countSentencesFromDB();
+    const { id } = req.params;
+    const result = await AnalyzerService.countSentencesFromDB(id);
 
     sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -71,7 +88,8 @@ const countSentences = catchAsync(
 
 const countParagraphs = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
-    const result = await AnalyzerService.countParagraphsFromDB();
+    const { id } = req.params;
+    const result = await AnalyzerService.countParagraphsFromDB(id);
 
     sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -84,7 +102,8 @@ const countParagraphs = catchAsync(
 
 const countLongestWords = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
-    const result = await AnalyzerService.countLongestWordsFromDB();
+    const { id } = req.params;
+    const result = await AnalyzerService.countLongestWordsFromDB(id);
 
     sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -98,6 +117,7 @@ const countLongestWords = catchAsync(
 export const AnalyzerController = {
   addText,
   getAllText,
+  getSingleText,
   countWords,
   countCharacters,
   countSentences,
