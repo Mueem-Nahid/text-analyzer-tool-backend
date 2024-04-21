@@ -14,8 +14,8 @@ const myFormat = printf(({ level, message, label, timestamp }) => {
 
 export const logger: Logger = createLogger({
   level: 'info',
-  format: combine(label({ label: 'Auth service' }), timestamp(), myFormat),
-  defaultMeta: { service: 'user-service' },
+  format: combine(label({ label: 'Text analyzer tool' }), timestamp(), myFormat),
+  defaultMeta: { service: 'text-analyzer' },
   transports: [
     new transports.Console(),
     new DailyRotateFile({
@@ -24,7 +24,7 @@ export const logger: Logger = createLogger({
         'logs',
         'winston',
         'infos',
-        'auth-service-%DATE%.log'
+        'text-analyzer-%DATE%.log'
       ),
       datePattern: 'YYYY-MM-DD-HH',
       zippedArchive: true,
@@ -36,8 +36,8 @@ export const logger: Logger = createLogger({
 
 export const errorLogger: Logger = createLogger({
   level: 'error',
-  format: combine(label({ label: 'Auth service' }), timestamp(), myFormat),
-  defaultMeta: { service: 'user-service' },
+  format: combine(label({ label: 'Text analyzer tool' }), timestamp(), myFormat),
+  defaultMeta: { service: 'text-analyzer' },
   transports: [
     new transports.Console(),
     new DailyRotateFile({
@@ -46,7 +46,7 @@ export const errorLogger: Logger = createLogger({
         'logs',
         'winston',
         'errors',
-        'auth-service-%DATE%.log'
+        'text-analyzer-%DATE%.log'
       ),
       datePattern: 'YYYY-MM-DD-HH',
       zippedArchive: true,
