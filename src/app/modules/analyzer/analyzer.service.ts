@@ -11,7 +11,7 @@ import {
 import ApiError from '../../../errors/ApiError';
 import httpStatus from 'http-status';
 
-const CHUNK_SIZE  = 10000;
+const CHUNK_SIZE  = 20000;
 
 const insertText = async (payload: IAnalyzer) => {
   return await TextAnalyzer.create(payload);
