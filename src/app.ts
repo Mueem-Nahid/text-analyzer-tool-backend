@@ -7,6 +7,8 @@ import cookieParser from 'cookie-parser';
 import { keycloak, passport } from './helpers/keycloak';
 import session from 'express-session';
 import limiter from './app/middlewares/throttle';
+import morgan from 'morgan';
+import winston from 'winston';
 
 const app: Application = express();
 
@@ -17,6 +19,9 @@ app.use(cors());
 // parse data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(morgan('combined'));
+winston.add(new winston.transports.Console());
 
 // cookie parser
 app.use(cookieParser());
