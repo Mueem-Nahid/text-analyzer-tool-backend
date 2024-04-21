@@ -33,6 +33,6 @@ for (let i = 0; i < text.length; i += chunkSize) {
     str = analyzeChunk(chunk, functionName);
   }
 }
-console.log("parentPort: ", parentPort);
+
 parentPort?.postMessage(count ? count : str);
 

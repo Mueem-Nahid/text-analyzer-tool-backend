@@ -6,6 +6,7 @@ import httpStatus from 'http-status';
 import cookieParser from 'cookie-parser';
 import { keycloak, passport } from './helpers/keycloak';
 import session from 'express-session';
+import limiter from './app/middlewares/throttle';
 
 const app: Application = express();
 
@@ -35,6 +36,7 @@ app.use(keycloak.middleware());
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(limiter);
 
 // application routes
 app.use('/api/v1', routes);
