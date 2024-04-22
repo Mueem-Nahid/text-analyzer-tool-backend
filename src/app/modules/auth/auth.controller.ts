@@ -1,16 +1,18 @@
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import httpStatus from 'http-status';
-import { Request, Response } from 'express';
+import {Request, Response} from 'express';
+import {AuthService} from "./auth.service";
 
 const signup = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
-    console.log(req.body, "req");
+    const {username, email, password} = req.body;
+    const result = await AuthService.signup({username, email, password});
     sendResponse(res, {
       statusCode: httpStatus.CREATED,
       success: true,
-      message: 'Student created successfully !',
-      data: {},
+      message: 'User created successfully !',
+      data: result,
     });
   }
 );
@@ -21,7 +23,7 @@ const signin = catchAsync(
     sendResponse(res, {
       statusCode: httpStatus.CREATED,
       success: true,
-      message: 'Student created successfully !',
+      message: 'User logged in successfully !',
       data: {},
     });
   }
