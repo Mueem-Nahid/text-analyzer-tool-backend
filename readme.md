@@ -12,6 +12,7 @@ Video: https://drive.google.com/file/d/1YJt3VIW15heCDZsEfPwzpGfllm__KnUc/view?us
 
 - [Requirements](#requirements)
 - [Installation](#installation)
+- [Technology](#technology)
 - [Usage](#usage)
 - [API Documentation](#api-documentation)
 - [Scripts](#scripts)
@@ -45,9 +46,19 @@ The server will start listening on port 5000 by default. You can then access the
 
 To test the project, run `npm run test`.
 
+## Technology and Features
+
+- Node
+- Express
+- TS
+- MongoDB
+- SSO (Oauth2.0, keycloak)
+- Jest
+
 ## API Documentation
 
 ### Sign up user
+- Keycloak for SSO.
 
 ### Create a new text
 
