@@ -7,9 +7,9 @@ import cookieParser from 'cookie-parser';
 import {keycloak, passport} from './helpers/keycloak';
 import session from 'express-session';
 import limiter from './app/middlewares/throttle';
-import {keycloakAdminClient, keycloakAdminConfig} from "./helpers/keycloakAdmin";
 import morgan from "morgan";
 import winston from "winston";
+// import {keycloakAdminClient, keycloakAdminConfig} from "./helpers/keycloakAdmin";
 // import tokenRequester from "keycloak-request-token";
 
 const app: Application = express();
@@ -71,7 +71,7 @@ app.use(passport.session());
   }
 });*/
 
-app.use(async (req, res, next) => {
+/*app.use(async (req, res, next) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
     console.log("token here: ", token);
@@ -99,7 +99,7 @@ app.use(async (req, res, next) => {
     console.error('Keycloak middleware error:', error);
     res.status(401).json({ message: 'Unauthorized' });
   }
-});
+});*/
 
 app.use(limiter);
 
