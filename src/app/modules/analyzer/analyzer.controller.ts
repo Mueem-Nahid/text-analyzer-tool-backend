@@ -46,7 +46,7 @@ const getSingleText = catchAsync(
     const result = await AnalyzerService.getSingleText(id, email);
 
     sendResponse(res, {
-      statusCode: httpStatus.CREATED,
+      statusCode: httpStatus.OK,
       success: true,
       message: 'Text fetched successfully !',
       data: result,
