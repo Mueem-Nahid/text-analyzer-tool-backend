@@ -114,6 +114,20 @@ const countLongestWords = catchAsync(
   }
 );
 
+const deleteText = catchAsync(
+  async (req: Request, res: Response): Promise<void> => {
+    const { id } = req.params;
+    const result = await AnalyzerService.deleteText(id);
+
+    sendResponse(res, {
+      statusCode: httpStatus.NO_CONTENT,
+      success: true,
+      message: 'Text deleted successfully !',
+      data: result
+    });
+  }
+);
+
 export const AnalyzerController = {
   addText,
   getAllText,
@@ -122,5 +136,6 @@ export const AnalyzerController = {
   countCharacters,
   countSentences,
   countParagraphs,
-  countLongestWords
+  countLongestWords,
+  deleteText
 };

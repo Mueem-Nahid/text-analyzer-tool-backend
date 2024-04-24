@@ -44,7 +44,12 @@ router.get(
 router.get(
   '/:id/longest-words',
   AnalyzerController.countLongestWords
-)
+);
+
+router.delete(
+  '/:id',
+  AnalyzerController.deleteText
+);
 
 
 export const AnalyzerRoutes = router;

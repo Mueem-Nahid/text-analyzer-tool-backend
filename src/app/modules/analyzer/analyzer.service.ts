@@ -1,5 +1,5 @@
-import { IAnalyzer } from './analyzer.interface';
-import { TextAnalyzer } from './analyzer.model';
+import {IAnalyzer} from './analyzer.interface';
+import {TextAnalyzer} from './analyzer.model';
 import {
   analyzeTextInChunks,
   countCharacters,
@@ -11,7 +11,7 @@ import {
 import ApiError from '../../../errors/ApiError';
 import httpStatus from 'http-status';
 
-const CHUNK_SIZE  = 20000;
+const CHUNK_SIZE = 20000;
 
 const insertText = async (payload: IAnalyzer) => {
   return await TextAnalyzer.create(payload);
@@ -135,6 +135,10 @@ const countLongestWordsFromDB = async (id: string) => {
   }
 };
 
+const deleteText = async (id: string) => {
+  return TextAnalyzer.deleteOne({_id: id});
+}
+
 export const AnalyzerService = {
   insertText,
   getAllText,
@@ -143,5 +147,6 @@ export const AnalyzerService = {
   countCharactersFromDB,
   countSentencesFromDB,
   countParagraphsFromDB,
-  countLongestWordsFromDB
+  countLongestWordsFromDB,
+  deleteText
 };
