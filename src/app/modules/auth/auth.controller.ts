@@ -17,19 +17,6 @@ const signup = catchAsync(
   }
 );
 
-const signin = catchAsync(
-  async (req: Request, res: Response): Promise<void> => {
-    console.log(req.body, "req");
-    sendResponse(res, {
-      statusCode: httpStatus.CREATED,
-      success: true,
-      message: 'User logged in successfully !',
-      data: {},
-    });
-  }
-);
-
 export const AuthController = {
   signup,
-  signin
 };

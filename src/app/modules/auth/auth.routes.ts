@@ -12,9 +12,4 @@ router.post(
   AuthController.signup
 );
 
-router.post(
-  '/signin',
-  AuthController.signin
-);
-
 export const AuthRoutes = router;
