@@ -6,7 +6,11 @@ import { AnalyzerService } from './analyzer.service';
 
 const addText = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
-    const result = await AnalyzerService.insertText(req.body);
+    const email =  req.user;
+    const text = req.body.text;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const result = await AnalyzerService.insertText({email, text});
 
     sendResponse(res, {
       statusCode: httpStatus.CREATED,
@@ -19,10 +23,13 @@ const addText = catchAsync(
 
 const getAllText = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
-    const result = await AnalyzerService.getAllText();
+    const email =  req.user;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const result = await AnalyzerService.getAllText(email);
 
     sendResponse(res, {
-      statusCode: httpStatus.CREATED,
+      statusCode: httpStatus.OK,
       success: true,
       message: 'All texts fetched successfully !',
       data: result
@@ -33,7 +40,10 @@ const getAllText = catchAsync(
 const getSingleText = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
-    const result = await AnalyzerService.getSingleText(id);
+    const email =  req.user;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const result = await AnalyzerService.getSingleText(id, email);
 
     sendResponse(res, {
       statusCode: httpStatus.CREATED,
@@ -47,7 +57,10 @@ const getSingleText = catchAsync(
 const countWords = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
-    const result = await AnalyzerService.countWordsFromDB(id);
+    const email =  req.user;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const result = await AnalyzerService.countWordsFromDB(id, email);
 
     sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -61,7 +74,10 @@ const countWords = catchAsync(
 const countCharacters = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
-    const result = await AnalyzerService.countCharactersFromDB(id);
+    const email =  req.user;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const result = await AnalyzerService.countCharactersFromDB(id, email);
 
     sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -75,7 +91,10 @@ const countCharacters = catchAsync(
 const countSentences = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
-    const result = await AnalyzerService.countSentencesFromDB(id);
+    const email =  req.user;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const result = await AnalyzerService.countSentencesFromDB(id, email);
 
     sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -89,7 +108,10 @@ const countSentences = catchAsync(
 const countParagraphs = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
-    const result = await AnalyzerService.countParagraphsFromDB(id);
+    const email =  req.user;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const result = await AnalyzerService.countParagraphsFromDB(id, email);
 
     sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -103,7 +125,10 @@ const countParagraphs = catchAsync(
 const countLongestWords = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
-    const result = await AnalyzerService.countLongestWordsFromDB(id);
+    const email =  req.user;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const result = await AnalyzerService.countLongestWordsFromDB(id, email);
 
     sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -117,7 +142,10 @@ const countLongestWords = catchAsync(
 const deleteText = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
-    const result = await AnalyzerService.deleteText(id);
+    const email =  req.user;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const result = await AnalyzerService.deleteText(id, email);
 
     sendResponse(res, {
       statusCode: httpStatus.NO_CONTENT,

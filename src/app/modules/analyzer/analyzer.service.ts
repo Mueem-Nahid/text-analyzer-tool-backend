@@ -1,11 +1,11 @@
-import {IAnalyzer} from './analyzer.interface';
 import {TextAnalyzer} from './analyzer.model';
 import {
   analyzeTextInChunks,
   countCharacters,
   countParagraphs,
   countSentences,
-  countWords, elapsedTime,
+  countWords,
+  elapsedTime,
   findLongestWords
 } from './analyzer.utils';
 import ApiError from '../../../errors/ApiError';
@@ -13,21 +13,27 @@ import httpStatus from 'http-status';
 
 const CHUNK_SIZE = 20000;
 
-const insertText = async (payload: IAnalyzer) => {
+const insertText = async (payload: { text: string; email: string }) => {
   return await TextAnalyzer.create(payload);
 };
 
-const getAllText = async () => {
-  return TextAnalyzer.find();
+const getAllText = async (email: string) => {
+  return TextAnalyzer.find({
+    email,
+  });
 };
 
-const getSingleText = async (id: string) => {
-  return TextAnalyzer.findById(id);
+const getSingleText = async (id: string, email: string) => {
+  const result = TextAnalyzer.findOne({_id: id, email});
+  if (!result) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Text not found.")
+  }
+  return result;
 };
 
-const countWordsFromDB = async (id: string) => {
+const countWordsFromDB = async (id: string, email: string) => {
   const startTime = performance.now();
-  const text = await getSingleText(id);
+  const text = await getSingleText(id, email);
   if (text) {
     let count;
     console.log(text.text.length, "text.text.length");
@@ -47,9 +53,9 @@ const countWordsFromDB = async (id: string) => {
   }
 };
 
-const countCharactersFromDB = async (id: string) => {
+const countCharactersFromDB = async (id: string, email: string) => {
   const startTime = performance.now();
-  const text = await getSingleText(id);
+  const text = await getSingleText(id, email);
   if (text) {
     let count;
     console.log(text.text.length, "text.text.length");
@@ -69,9 +75,9 @@ const countCharactersFromDB = async (id: string) => {
   }
 };
 
-const countSentencesFromDB = async (id: string) => {
+const countSentencesFromDB = async (id: string, email: string) => {
   const startTime = performance.now();
-  const text = await getSingleText(id);
+  const text = await getSingleText(id, email);
   if (text) {
     let count;
     console.log(text.text.length, "text.text.length");
@@ -91,9 +97,9 @@ const countSentencesFromDB = async (id: string) => {
   }
 };
 
-const countParagraphsFromDB = async (id: string) => {
+const countParagraphsFromDB = async (id: string, email: string) => {
   const startTime = performance.now();
-  const text = await getSingleText(id);
+  const text = await getSingleText(id, email);
   if (text) {
     let count;
     console.log(text.text.length, "text.text.length");
@@ -113,9 +119,9 @@ const countParagraphsFromDB = async (id: string) => {
   }
 };
 
-const countLongestWordsFromDB = async (id: string) => {
+const countLongestWordsFromDB = async (id: string, email: string) => {
   const startTime = performance.now();
-  const text = await getSingleText(id);
+  const text = await getSingleText(id, email);
   if (text) {
     let longestWords;
     console.log(text.text.length, "text.text.length");
@@ -135,8 +141,8 @@ const countLongestWordsFromDB = async (id: string) => {
   }
 };
 
-const deleteText = async (id: string) => {
-  return TextAnalyzer.deleteOne({_id: id});
+const deleteText = async (id: string, email: string) => {
+  return TextAnalyzer.deleteOne({_id: id, email});
 }
 
 export const AnalyzerService = {

@@ -1,26 +1,12 @@
-import { model, Schema } from 'mongoose';
-import { AnalyzerModel, IAnalyzer } from './analyzer.interface';
+import {model, Schema} from 'mongoose';
+import {AnalyzerModel, IAnalyzer} from './analyzer.interface';
 
 export const textAnalyzerSchema = new Schema({
+    email: {type: String, required: true},
     text: {
       type: String,
       required: true
     },
-    /*totalNumberOfWords: {
-      type: Number
-    },
-    totalNumberOfCharacters: {
-      type: Number
-    },
-    totalNumberOfSentences: {
-      type: Number
-    },
-    totalNumberOfParagraphs: {
-      type: Number
-    },
-    longestWordsInParagraphs: {
-      type: String,
-    }*/
   },
   {
     timestamps: true,
