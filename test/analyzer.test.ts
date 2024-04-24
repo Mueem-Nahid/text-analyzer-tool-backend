@@ -22,11 +22,15 @@ describe('Text Analyzer API', () => {
   it('should create a new text entry', async () => {
     const res = await request(app)
       .post('/api/v1/analyzer')
-      .send({ text: 'The quick brown fox jumps over the lazy dog. The lazy dog slept in the sun.' })
+      .send({
+        text: 'The quick brown fox jumps over the lazy dog. The lazy dog slept in the sun.',
+      })
       .expect(201);
 
     expect(res.body.success).toBe(true);
-    expect(res.body.data.text).toBe('The quick brown fox jumps over the lazy dog. The lazy dog slept in the sun.');
+    expect(res.body.data.text).toBe(
+      'The quick brown fox jumps over the lazy dog. The lazy dog slept in the sun.'
+    );
     textId = res.body.data._id;
   });
 

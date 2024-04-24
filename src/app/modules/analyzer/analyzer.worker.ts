@@ -1,5 +1,11 @@
 import { parentPort, workerData } from 'worker_threads';
-import { countCharacters, countWords, countSentences, countParagraphs, findLongestWords } from './analyzer.utils';
+import {
+  countCharacters,
+  countWords,
+  countSentences,
+  countParagraphs,
+  findLongestWords,
+} from './analyzer.utils';
 
 const { text, chunkSize, functionName } = workerData;
 
@@ -35,4 +41,3 @@ for (let i = 0; i < text.length; i += chunkSize) {
 }
 
 parentPort?.postMessage(count ? count : str);
-

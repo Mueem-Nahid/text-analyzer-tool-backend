@@ -6,24 +6,24 @@ import { AnalyzerService } from './analyzer.service';
 
 const addText = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
-    const email =  req.user;
+    const email = req.user;
     const text = req.body.text;
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const result = await AnalyzerService.insertText({email, text});
+    const result = await AnalyzerService.insertText({ email, text });
 
     sendResponse(res, {
       statusCode: httpStatus.CREATED,
       success: true,
       message: 'Text inserted successfully !',
-      data: result
+      data: result,
     });
   }
 );
 
 const getAllText = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
-    const email =  req.user;
+    const email = req.user;
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const result = await AnalyzerService.getAllText(email);
@@ -32,7 +32,7 @@ const getAllText = catchAsync(
       statusCode: httpStatus.OK,
       success: true,
       message: 'All texts fetched successfully !',
-      data: result
+      data: result,
     });
   }
 );
@@ -40,7 +40,7 @@ const getAllText = catchAsync(
 const getSingleText = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
-    const email =  req.user;
+    const email = req.user;
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const result = await AnalyzerService.getSingleText(id, email);
@@ -49,7 +49,7 @@ const getSingleText = catchAsync(
       statusCode: httpStatus.CREATED,
       success: true,
       message: 'Text fetched successfully !',
-      data: result
+      data: result,
     });
   }
 );
@@ -57,7 +57,7 @@ const getSingleText = catchAsync(
 const countWords = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
-    const email =  req.user;
+    const email = req.user;
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const result = await AnalyzerService.countWordsFromDB(id, email);
@@ -66,7 +66,7 @@ const countWords = catchAsync(
       statusCode: httpStatus.OK,
       success: true,
       message: 'Number of words fetched successfully !',
-      data: result
+      data: result,
     });
   }
 );
@@ -74,7 +74,7 @@ const countWords = catchAsync(
 const countCharacters = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
-    const email =  req.user;
+    const email = req.user;
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const result = await AnalyzerService.countCharactersFromDB(id, email);
@@ -83,7 +83,7 @@ const countCharacters = catchAsync(
       statusCode: httpStatus.OK,
       success: true,
       message: 'Number of characters fetched successfully !',
-      data: result
+      data: result,
     });
   }
 );
@@ -91,7 +91,7 @@ const countCharacters = catchAsync(
 const countSentences = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
-    const email =  req.user;
+    const email = req.user;
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const result = await AnalyzerService.countSentencesFromDB(id, email);
@@ -100,7 +100,7 @@ const countSentences = catchAsync(
       statusCode: httpStatus.OK,
       success: true,
       message: 'Number of sentences fetched successfully !',
-      data: result
+      data: result,
     });
   }
 );
@@ -108,7 +108,7 @@ const countSentences = catchAsync(
 const countParagraphs = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
-    const email =  req.user;
+    const email = req.user;
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const result = await AnalyzerService.countParagraphsFromDB(id, email);
@@ -117,7 +117,7 @@ const countParagraphs = catchAsync(
       statusCode: httpStatus.OK,
       success: true,
       message: 'Number of paragraphs fetched successfully !',
-      data: result
+      data: result,
     });
   }
 );
@@ -125,7 +125,7 @@ const countParagraphs = catchAsync(
 const countLongestWords = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
-    const email =  req.user;
+    const email = req.user;
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const result = await AnalyzerService.countLongestWordsFromDB(id, email);
@@ -134,7 +134,7 @@ const countLongestWords = catchAsync(
       statusCode: httpStatus.OK,
       success: true,
       message: 'Longest characters fetched successfully !',
-      data: result
+      data: result,
     });
   }
 );
@@ -142,7 +142,7 @@ const countLongestWords = catchAsync(
 const deleteText = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
-    const email =  req.user;
+    const email = req.user;
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const result = await AnalyzerService.deleteText(id, email);
@@ -151,7 +151,7 @@ const deleteText = catchAsync(
       statusCode: httpStatus.NO_CONTENT,
       success: true,
       message: 'Text deleted successfully !',
-      data: result
+      data: result,
     });
   }
 );
@@ -159,7 +159,7 @@ const deleteText = catchAsync(
 const getReport = catchAsync(
   async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
-    const email =  req.user;
+    const email = req.user;
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const result = await AnalyzerService.getReport(id, email);
@@ -168,7 +168,7 @@ const getReport = catchAsync(
       statusCode: httpStatus.CREATED,
       success: true,
       message: 'Text fetched successfully !',
-      data: result
+      data: result,
     });
   }
 );
@@ -183,5 +183,5 @@ export const AnalyzerController = {
   countParagraphs,
   countLongestWords,
   deleteText,
-  getReport
+  getReport,
 };

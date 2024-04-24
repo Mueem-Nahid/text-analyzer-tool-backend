@@ -1,5 +1,5 @@
-import express, {Router} from 'express';
-import {AnalyzerRoutes} from '../modules/analyzer/analyzer.routes';
+import express, { Router } from 'express';
+import { AnalyzerRoutes } from '../modules/analyzer/analyzer.routes';
 
 const router = express.Router();
 
@@ -7,8 +7,8 @@ const router = express.Router();
 const moduleRoutes: { path: string; route: Router }[] = [
   {
     path: '/analyzer',
-    route: AnalyzerRoutes
-  }
+    route: AnalyzerRoutes,
+  },
 ];
 
 moduleRoutes.forEach(route => router.use(route.path, route.route));

@@ -1,12 +1,12 @@
 import { KeycloakAdminClient } from 'keycloak-admin/lib/client';
-import config from "../config";
+import config from '../config';
 
 type KeycloakAdminConfig = {
   baseUrl: string;
   realmName: string;
   clientId: string;
   clientSecret: string;
-}
+};
 
 const keycloakAdminConfig: KeycloakAdminConfig = {
   baseUrl: config.keycloak.baseUrl!,
@@ -15,7 +15,6 @@ const keycloakAdminConfig: KeycloakAdminConfig = {
   clientSecret: config.keycloak.clientSecret!,
 };
 
-const keycloakAdminClient = new KeycloakAdminClient (keycloakAdminConfig);
+const keycloakAdminClient = new KeycloakAdminClient(keycloakAdminConfig);
 
-export {keycloakAdminConfig, keycloakAdminClient};
-
+export { keycloakAdminConfig, keycloakAdminClient };

@@ -14,7 +14,11 @@ const myFormat = printf(({ level, message, label, timestamp }) => {
 
 export const logger: Logger = createLogger({
   level: 'info',
-  format: combine(label({ label: 'Text analyzer tool' }), timestamp(), myFormat),
+  format: combine(
+    label({ label: 'Text analyzer tool' }),
+    timestamp(),
+    myFormat
+  ),
   defaultMeta: { service: 'text-analyzer' },
   transports: [
     new transports.Console(),
@@ -36,7 +40,11 @@ export const logger: Logger = createLogger({
 
 export const errorLogger: Logger = createLogger({
   level: 'error',
-  format: combine(label({ label: 'Text analyzer tool' }), timestamp(), myFormat),
+  format: combine(
+    label({ label: 'Text analyzer tool' }),
+    timestamp(),
+    myFormat
+  ),
   defaultMeta: { service: 'text-analyzer' },
   transports: [
     new transports.Console(),

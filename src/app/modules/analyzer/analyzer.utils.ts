@@ -43,19 +43,25 @@ export const elapsedTime = (startTime: number) => {
   return elapsedTime.toFixed(2);
 };
 
-export const analyzeTextInChunks = (text: string, chunkSize: number, functionName: string): Promise<{
-  wordCount: number,
-  characterCount: number
+export const analyzeTextInChunks = (
+  text: string,
+  chunkSize: number,
+  functionName: string
+): Promise<{
+  wordCount: number;
+  characterCount: number;
 }> => {
   const workerPath = path.resolve(__dirname, 'analyzer.worker.ts');
   return new Promise((resolve, reject) => {
-    const worker = new Worker(workerPath, { workerData: { text, chunkSize, functionName } });
+    const worker = new Worker(workerPath, {
+      workerData: { text, chunkSize, functionName },
+    });
 
-    worker.on('message', (message) => {
+    worker.on('message', message => {
       resolve(message);
     });
 
-    worker.on('error', (error) => {
+    worker.on('error', error => {
       reject(error);
     });
   });
