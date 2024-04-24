@@ -60,3 +60,20 @@ export const analyzeTextInChunks = (text: string, chunkSize: number, functionNam
     });
   });
 };
+
+export const analyzeReport = (text: string, functionName: string) => {
+  switch (functionName) {
+    case 'countWords':
+      return countWords(text);
+    case 'countCharacters':
+      return countCharacters(text);
+    case 'countSentences':
+      return countSentences(text);
+    case 'countParagraphs':
+      return countParagraphs(text);
+    case 'findLongestWords':
+      return findLongestWords(text);
+    default:
+      throw new Error('Invalid function name');
+  }
+};

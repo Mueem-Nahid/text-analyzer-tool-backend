@@ -1,5 +1,6 @@
 import {TextAnalyzer} from './analyzer.model';
 import {
+  analyzeReport,
   analyzeTextInChunks,
   countCharacters,
   countParagraphs,
@@ -148,43 +149,38 @@ const deleteText = async (id: string, email: string) => {
 const getReport = async (id: string, email: string) => {
   const startTime = performance.now();
   const text = await getSingleText(id, email);
-  if (text) {
-    if (text.text.length > CHUNK_SIZE) {
-      const words = await analyzeTextInChunks(text.text, CHUNK_SIZE, "countWords");
-      const characters = await analyzeTextInChunks(text.text, CHUNK_SIZE, "countCharacters");
-      const sentences = await analyzeTextInChunks(text.text, CHUNK_SIZE, "countSentences");
-      const paragraphs = await analyzeTextInChunks(text.text, CHUNK_SIZE, "countParagraphs");
-      const longestWords = await analyzeTextInChunks(text.text, CHUNK_SIZE, "findLongestWords");
-     const longestWordsCount = longestWords.length;
 
-      return {
-        words,
-        characters,
-        sentences,
-        paragraphs,
-        longestWordsCount,
-        analysisTime: elapsedTime(startTime)
-      }
-    } else {
-      const words = countWords(text.text);
-      const characters = countCharacters(text.text);
-      const sentences = countSentences(text.text);
-      const paragraphs = countParagraphs(text.text);
-      const longestWords = findLongestWords(text.text)?.length;
-
-      return {
-        words,
-        characters,
-        sentences,
-        paragraphs,
-        longestWords,
-        analysisTime: elapsedTime(startTime)
-      }
-    }
-  } else {
+  if (!text) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'No text found');
   }
-}
+
+  const analyzeFunctions = [
+    { func: "countWords", title: "words" },
+    { func: "countCharacters", title: "characters" },
+    { func: "countSentences", title: "sentences" },
+    { func: "countParagraphs", title: "paragraphs" },
+    { func: "findLongestWords", title: "longestWords" }
+  ];
+
+  const analyzePromises = analyzeFunctions.map(async ({ func, title }) => {
+    if (text.text.length > CHUNK_SIZE) {
+      const result = await analyzeTextInChunks(text.text, CHUNK_SIZE, func);
+      return { [title]: result };
+    } else {
+      const result = analyzeReport(text.text, func);
+      return { [title]: result };
+    }
+  });
+
+  const results = await Promise.all(analyzePromises);
+
+  const report = {
+    ...Object.assign({}, ...results),
+    analysisTime: elapsedTime(startTime)
+  };
+
+  return report;
+};
 
 export const AnalyzerService = {
   insertText,
