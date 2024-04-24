@@ -26,6 +26,12 @@ router.get(
 );
 
 router.get(
+  '/report/:id',
+  auth(),
+  AnalyzerController.getReport
+);
+
+router.get(
   '/:id/words',
   auth(),
   AnalyzerController.countWords

@@ -145,6 +145,47 @@ const deleteText = async (id: string, email: string) => {
   return TextAnalyzer.deleteOne({_id: id, email});
 }
 
+const getReport = async (id: string, email: string) => {
+  const startTime = performance.now();
+  const text = await getSingleText(id, email);
+  if (text) {
+    if (text.text.length > CHUNK_SIZE) {
+      const words = await analyzeTextInChunks(text.text, CHUNK_SIZE, "countWords");
+      const characters = await analyzeTextInChunks(text.text, CHUNK_SIZE, "countCharacters");
+      const sentences = await analyzeTextInChunks(text.text, CHUNK_SIZE, "countSentences");
+      const paragraphs = await analyzeTextInChunks(text.text, CHUNK_SIZE, "countParagraphs");
+      const longestWords = await analyzeTextInChunks(text.text, CHUNK_SIZE, "findLongestWords");
+     const longestWordsCount = longestWords.length;
+
+      return {
+        words,
+        characters,
+        sentences,
+        paragraphs,
+        longestWordsCount,
+        analysisTime: elapsedTime(startTime)
+      }
+    } else {
+      const words = countWords(text.text);
+      const characters = countCharacters(text.text);
+      const sentences = countSentences(text.text);
+      const paragraphs = countParagraphs(text.text);
+      const longestWords = findLongestWords(text.text)?.length;
+
+      return {
+        words,
+        characters,
+        sentences,
+        paragraphs,
+        longestWords,
+        analysisTime: elapsedTime(startTime)
+      }
+    }
+  } else {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'No text found');
+  }
+}
+
 export const AnalyzerService = {
   insertText,
   getAllText,
@@ -154,5 +195,6 @@ export const AnalyzerService = {
   countSentencesFromDB,
   countParagraphsFromDB,
   countLongestWordsFromDB,
-  deleteText
+  deleteText,
+  getReport
 };

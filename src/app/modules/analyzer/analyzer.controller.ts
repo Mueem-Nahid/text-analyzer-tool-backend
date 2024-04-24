@@ -156,6 +156,23 @@ const deleteText = catchAsync(
   }
 );
 
+const getReport = catchAsync(
+  async (req: Request, res: Response): Promise<void> => {
+    const { id } = req.params;
+    const email =  req.user;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const result = await AnalyzerService.getReport(id, email);
+
+    sendResponse(res, {
+      statusCode: httpStatus.CREATED,
+      success: true,
+      message: 'Text fetched successfully !',
+      data: result
+    });
+  }
+);
+
 export const AnalyzerController = {
   addText,
   getAllText,
@@ -165,5 +182,6 @@ export const AnalyzerController = {
   countSentences,
   countParagraphs,
   countLongestWords,
-  deleteText
+  deleteText,
+  getReport
 };
