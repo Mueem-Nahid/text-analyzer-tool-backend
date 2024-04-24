@@ -6,7 +6,7 @@ Text Analyzer API is a simple RESTful API built with Express, Keycloak and Mongo
 Follow this url: https://github.com/Mueem-Nahid/text-analyzer-frontend
 
 ## Demo project video:
-
+Video: https://drive.google.com/file/d/1YJt3VIW15heCDZsEfPwzpGfllm__KnUc/view?usp=sharing
 
 ## Table of Contents
 
