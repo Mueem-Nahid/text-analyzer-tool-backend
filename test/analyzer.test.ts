@@ -3,9 +3,15 @@
 import request from 'supertest';
 import mongoose from 'mongoose';
 import app from '../src/app';
-import {afterAll, beforeAll, beforeEach, describe, expect, it} from '@jest/globals';
-import {TextAnalyzer} from "../src/app/modules/analyzer/analyzer.model";
-
+import {
+  afterAll,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+} from '@jest/globals';
+import { TextAnalyzer } from '../src/app/modules/analyzer/analyzer.model';
 
 beforeAll(async () => {
   const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/test';
@@ -84,7 +90,9 @@ describe('Text Analyzer API', () => {
       .expect(200);
     expect(res.body.success).toBe(true);
     expect(res.body.message).toBe('Text fetched successfully !');
-    expect(res.body.data.text).toBe('The quick brown fox jumps over the lazy dog. The lazy dog slept in the sun.');
+    expect(res.body.data.text).toBe(
+      'The quick brown fox jumps over the lazy dog. The lazy dog slept in the sun.'
+    );
   });
 
   it('should get the number of words from a text', async () => {
