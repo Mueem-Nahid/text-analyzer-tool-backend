@@ -12,6 +12,7 @@ Video: https://drive.google.com/file/d/1YJt3VIW15heCDZsEfPwzpGfllm__KnUc/view?us
 
 - [Requirements](#requirements)
 - [Installation](#installation)
+- [Testing](#testing)
 - [Technology](#technology)
 - [Features](#features)
 - [Usage](#usage)
@@ -45,7 +46,14 @@ To run the server locally, execute:
 
 The server will start listening on port 5000 by default. You can then access the API endpoints using tools like Postman or curl.
 
-To test the project, run `npm run test`.
+## Testing
+
+- To test the project, run `npm run test`. 
+- To run the tests and generate a coverage report, execute the following command: `npm test -- --coverage`
+- To open the coverage report run `start coverage/lcov-report/index.html`
+
+### Coverage Percentage
+The current test coverage percentage for the project is: 56%
 
 ## Technology
 
