@@ -11,8 +11,11 @@ import {
 } from './analyzer.utils';
 import ApiError from '../../../errors/ApiError';
 import httpStatus from 'http-status';
+import NodeCache from "node-cache";
 
+const cache = new NodeCache();
 const CHUNK_SIZE = 20000;
+const CACHE_TTL = 3600; // 1 hour
 
 const insertText = async (payload: { text: string; email: string }) => {
   return await TextAnalyzer.create(payload);
@@ -163,6 +166,13 @@ const deleteText = async (id: string, email: string) => {
 };
 
 const getReport = async (id: string, email: string) => {
+  const cacheKey = `${email}-${id}`;
+  const cachedReport = cache.get(cacheKey);
+  console.log("cache: ", cachedReport)
+  if (cachedReport) {
+    return cachedReport;
+  }
+
   const startTime = performance.now();
   const text = await getSingleText(id, email);
 
@@ -194,6 +204,9 @@ const getReport = async (id: string, email: string) => {
     ...Object.assign({}, ...results),
     analysisTime: elapsedTime(startTime),
   };
+
+  // Cache the report
+  cache.set(cacheKey, report, CACHE_TTL);
 
   return report;
 };
